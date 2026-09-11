@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>초등학생 책을 읽는 즐거움 — 브랜드 전략 대시보드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EAE7DE;
+    --panel: #FFFFFF;
+    --ink: #1C1810;
+    --paper: #F5F1E6;
+    --muted-dark: #6B6656;
+    --muted-light: #C9C2AE;
+    --orange: #E8672B;
+    --orange-deep: #B94F1D;
+    --green: #A9D14C;
+    --green-deep: #5C7A22;
+    --line: #D8D4C5;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans KR',sans-serif; -webkit-font-smoothing:antialiased; }
+  body{ padding:0 0 100px; }
+
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 20px; }
+  @media (min-width:780px){ .wrap{ padding:0 48px; } }
+
+  /* ---------- Masthead ---------- */
+  .masthead{ padding:44px 0 0; }
+  .kicker{ font-size:13px; letter-spacing:.02em; color:var(--green-deep); font-weight:700; margin:0 0 18px; }
+  .brand{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:clamp(38px,8vw,84px); line-height:1.02; margin:0; color:var(--ink); }
+  .promise{ font-family:'Noto Serif KR',serif; font-weight:500; font-size:clamp(18px,2.8vw,26px); line-height:1.55; color:var(--orange-deep); margin:22px 0 0; max-width:44ch; }
+
+  /* ---------- KPI blocks ---------- */
+  .kpi-row{ display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-top:44px; background:var(--line); }
+  @media (min-width:820px){ .kpi-row{ grid-template-columns:1.1fr 0.8fr 0.8fr 1.3fr; } }
+  .kpi{ padding:30px 24px; display:flex; flex-direction:column; justify-content:space-between; min-height:142px; }
+  .kpi-label{ font-size:12.5px; font-weight:700; opacity:.9; margin:0 0 14px; }
+  .kpi-value{ font-family:'Noto Serif KR',serif; font-weight:900; line-height:1.15; margin:0; }
+  .kpi--dark{ background:var(--ink); }
+  .kpi--dark .kpi-label{ color:var(--muted-light); }
+  .kpi--dark .kpi-value{ color:var(--paper); font-size:16px; }
+  .kpi--orange{ background:var(--orange); }
+  .kpi--orange .kpi-label{ color:#3C1A08; }
+  .kpi--orange .kpi-value{ color:var(--ink); font-size:44px; }
+  .kpi--green{ background:var(--green); }
+  .kpi--green .kpi-label{ color:#22330A; }
+  .kpi--green .kpi-value{ color:var(--ink); font-size:44px; }
+  .kpi--cream{ background:var(--panel); border:1px solid var(--line); }
+  .kpi--cream .kpi-label{ color:var(--muted-dark); }
+  .kpi--cream .kpi-value{ color:var(--ink); font-size:16px; }
+
+  /* ---------- Tabs ---------- */
+  .tabbar{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:60px; background:var(--line); }
+  .tab{ background:var(--panel); border:none; color:var(--muted-dark); font-family:'Noto Sans KR',sans-serif; cursor:pointer; padding:22px 18px; text-align:left; transition:background .15s ease, color .15s ease; }
+  .tab:hover{ color:var(--ink); }
+  .tab:focus-visible{ outline:2px solid var(--green-deep); outline-offset:-2px; }
+  .tab-index{ display:block; font-size:11.5px; font-weight:700; margin-bottom:8px; color:var(--muted-dark); }
+  .tab-title{ display:block; font-family:'Noto Serif KR',serif; font-weight:700; font-size:clamp(15px,2vw,18px); }
+  .tab[aria-selected="true"]{ background:var(--ink); color:var(--paper); }
+  .tab[aria-selected="true"] .tab-index{ color:var(--orange); }
+
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+
+  @media (prefers-reduced-motion:reduce){ .tab{ transition:none; } }
+
+  .section-head{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:clamp(24px,3.6vw,34px); margin:52px 0 10px; color:var(--ink); }
+  .section-sub{ color:var(--muted-dark); font-size:14.5px; line-height:1.6; margin:0 0 32px; max-width:60ch; }
+
+  /* ---------- Panel 1: 브랜드 DNA — 3색 블록 그리드 ---------- */
+  .pillar-grid{ display:grid; grid-template-columns:1fr; gap:2px; background:var(--line); }
+  @media (min-width:820px){ .pillar-grid{ grid-template-columns:repeat(3,1fr); } }
+  .pillar{ padding:38px 28px; min-height:230px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px; }
+  .pillar:nth-child(1){ background:var(--orange); }
+  .pillar:nth-child(2){ background:var(--ink); }
+  .pillar:nth-child(3){ background:var(--green); }
+  .pillar-name{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:22px; margin:0; line-height:1.3; }
+  .pillar:nth-child(1) .pillar-name{ color:var(--ink); }
+  .pillar:nth-child(2) .pillar-name{ color:var(--green); }
+  .pillar:nth-child(3) .pillar-name{ color:var(--ink); }
+  .pillar-desc{ font-size:14.5px; line-height:1.7; margin:0; }
+  .pillar:nth-child(1) .pillar-desc{ color:#3C1A08; }
+  .pillar:nth-child(2) .pillar-desc{ color:var(--muted-light); }
+  .pillar:nth-child(3) .pillar-desc{ color:#22330A; }
+
+  .rules-box{ margin-top:2px; background:var(--panel); border-left:6px solid var(--orange); padding:30px 28px 10px; }
+  .rules-box h3{ font-family:'Noto Serif KR',serif; font-size:17px; font-weight:700; margin:0 0 16px; color:var(--orange-deep); }
+  .rules-box ul{ margin:0; padding:0; list-style:none; }
+  .rules-box li{ font-size:14.5px; line-height:1.75; padding:15px 0; color:var(--ink); border-top:1px solid var(--line); display:flex; gap:12px; }
+  .rules-box li:first-child{ border-top:none; }
+  .rules-box li::before{ content:"금지"; flex:0 0 auto; font-size:11px; font-weight:700; color:var(--paper); background:var(--ink); padding:3px 8px; height:fit-content; }
+
+  /* ---------- Panel 2: 채널 전략 — 풀블리드 밴드 ---------- */
+  .band{ display:grid; grid-template-columns:1fr; border-top:1px solid var(--line); }
+  @media (min-width:820px){ .band{ grid-template-columns:280px 1fr; align-items:stretch; } }
+  .band:last-child{ border-bottom:1px solid var(--line); }
+  .band-name{ padding:34px 28px; display:flex; align-items:center; }
+  .band-name p{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:clamp(28px,4vw,40px); margin:0; }
+  .band:nth-child(odd){ background:var(--panel); }
+  .band:nth-child(odd) .band-name p{ color:var(--ink); }
+  .band:nth-child(even){ background:var(--ink); }
+  .band:nth-child(even) .band-name p{ color:var(--green); }
+  .band:nth-child(even) .band-role{ color:var(--muted-light); }
+  .band:nth-child(even) .band-action{ color:var(--green); }
+  .band-body{ padding:28px; display:grid; grid-template-columns:1fr; gap:16px; }
+  @media (min-width:600px){ .band-body{ grid-template-columns:1.3fr 1fr; } }
+  .band-role{ font-size:14.5px; color:var(--muted-dark); line-height:1.65; margin:0; }
+  .band-example{ font-family:'Noto Serif KR',serif; font-size:15.5px; color:var(--orange-deep); line-height:1.55; margin:0 0 8px; }
+  .band:nth-child(even) .band-example{ color:var(--orange); }
+  .band-action{ font-size:12.5px; font-weight:700; color:var(--green-deep); margin:0; }
+
+  /* ---------- Panel 3: 7일 캠페인 — 캘린더 그리드 ---------- */
+  .cal-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--line); }
+  @media (min-width:640px){ .cal-grid{ grid-template-columns:repeat(4,1fr); } }
+  @media (min-width:960px){ .cal-grid{ grid-template-columns:repeat(7,1fr); } }
+  .day-cell{ background:var(--panel); padding:22px 18px; display:flex; flex-direction:column; gap:12px; min-height:200px; }
+  .day-top{ display:flex; align-items:baseline; justify-content:space-between; }
+  .day-label{ font-size:12.5px; font-weight:700; color:var(--muted-dark); }
+  .day-num{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:24px; color:var(--bg); -webkit-text-stroke:1px var(--muted-dark); }
+  .day-content{ font-size:13.5px; line-height:1.55; color:var(--ink); margin:0; flex:1; }
+  .day-channel{ display:inline-block; font-size:11px; font-weight:700; padding:4px 9px; width:fit-content; }
+  .day-channel[data-ch="쓰레드"]{ background:var(--green); color:var(--ink); }
+  .day-channel[data-ch="인스타그램"]{ background:var(--orange); color:var(--ink); }
+  .day-channel[data-ch="블로그"]{ background:var(--ink); color:var(--paper); }
+  .day-channel[data-ch="유튜브"]{ background:var(--muted-dark); color:var(--paper); }
+  .day-action{ font-size:11.5px; color:var(--muted-dark); margin:0; }
+
+  .footnote{ margin-top:34px; font-size:13px; color:var(--muted-dark); line-height:1.7; max-width:62ch; padding-bottom:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <p class="kicker">콘텐츠 운영 본부 · 브랜드 전략 대시보드</p>
+    <h1 class="brand">초등학생 책을 읽는 즐거움</h1>
+    <p class="promise">하루 5분, 아무 글자나 읽는 것부터 시작합니다.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi--dark">
+      <p class="kpi-label">핵심 독자</p>
+      <p class="kpi-value">책 재미를 모르는<br>초등학생 · 부모</p>
+    </div>
+    <div class="kpi kpi--orange">
+      <p class="kpi-label">콘텐츠 기둥</p>
+      <p class="kpi-value">3</p>
+    </div>
+    <div class="kpi kpi--green">
+      <p class="kpi-label">운영 채널</p>
+      <p class="kpi-value">4</p>
+    </div>
+    <div class="kpi kpi--cream">
+      <p class="kpi-label">이번 주 행동</p>
+      <p class="kpi-value">체크리스트 저장하고<br>하루 실천하기</p>
+    </div>
+  </div>
+
+  <div class="tabbar" role="tablist" aria-label="콘텐츠 운영 본부 탭">
+    <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true" data-target="panel-1">
+      <span class="tab-index">01</span>
+      <span class="tab-title">브랜드 DNA</span>
+    </button>
+    <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" data-target="panel-2">
+      <span class="tab-index">02</span>
+      <span class="tab-title">채널 전략</span>
+    </button>
+    <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" data-target="panel-3">
+      <span class="tab-index">03</span>
+      <span class="tab-title">7일 캠페인</span>
+    </button>
+  </div>
+
+  <!-- Panel 1: 브랜드 DNA -->
+  <section class="panel active" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+    <h2 class="section-head">콘텐츠 기둥 3개</h2>
+    <p class="section-sub">모든 콘텐츠는 이 세 가지 중 하나에서 출발합니다. 셋 다 하루 5분, 강요 없이, 짧은 기록이라는 실제 경험에서 나온 것입니다.</p>
+
+    <div class="pillar-grid">
+      <div class="pillar">
+        <p class="pillar-name">하루 5분, 아무 글자나</p>
+        <p class="pillar-desc">긴 시간을 정해두지 않습니다. 5분만 글자를 보는 것부터 시작해서, 그 시간을 지키는 습관을 먼저 만듭니다.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-name">강요 대신 함께 고르기</p>
+        <p class="pillar-desc">책을 주고 읽으라고 하지 않습니다. 어떤 책을 펼칠지 고르는 과정부터 아이와 함께합니다.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-name">한 줄이면 충분한 기록</p>
+        <p class="pillar-desc">독서록을 쓰라고 하지 않습니다. 오늘 읽은 것에 대해 한 줄 감상만 남겨도 충분하다고 말합니다.</p>
+      </div>
+    </div>
+
+    <div class="rules-box">
+      <h3>지켜야 할 브랜드 규칙</h3>
+      <ul>
+        <li>가족의 실명, 얼굴, 학교, 주소는 공개하지 않는다.</li>
+        <li>완벽한 공부법이나 모두에게 맞는 정답처럼 말하지 않는다.</li>
+        <li>수익 보장, 과장된 전후 사진, 확인하지 않은 통계는 쓰지 않는다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Panel 2: 채널 전략 -->
+  <section class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+    <h2 class="section-head">채널별 역할</h2>
+    <p class="section-sub">네 채널은 같은 문장을 복사하지 않습니다. 각 채널은 서로 다른 역할을 맡고, 독자에게 남기는 행동도 하나씩만 다릅니다.</p>
+
+    <div class="band">
+      <div class="band-name"><p>유튜브</p></div>
+      <div class="band-body">
+        <div>
+          <p class="band-role">실제 아이의 변화 모습을 처음부터 끝까지 보여준다.</p>
+          <p class="band-example">"책 앞에서 5분을 못 버티던 아이, 그 다음 이야기"</p>
+        </div>
+        <p class="band-action">행동 — 영상 끝까지 보기</p>
+      </div>
+    </div>
+    <div class="band">
+      <div class="band-name"><p>인스타그램</p></div>
+      <div class="band-body">
+        <div>
+          <p class="band-role">저장하고 따라 할 단계와 체크리스트를 보여준다.</p>
+          <p class="band-example">"오늘 할 일 3가지: 5분 타이머 체크리스트"</p>
+        </div>
+        <p class="band-action">행동 — 저장하기</p>
+      </div>
+    </div>
+    <div class="band">
+      <div class="band-name"><p>블로그</p></div>
+      <div class="band-body">
+        <div>
+          <p class="band-role">검색해서 오래 읽을 수 있는 이유와 방법을 설명한다.</p>
+          <p class="band-example">"왜 30분보다 5분이 오래가는가"</p>
+        </div>
+        <p class="band-action">행동 — 끝까지 읽고 우리 아이 상황에 대입해보기</p>
+      </div>
+    </div>
+    <div class="band">
+      <div class="band-name"><p>쓰레드</p></div>
+      <div class="band-body">
+        <div>
+          <p class="band-role">짧은 경험과 질문으로 대화를 시작한다.</p>
+          <p class="band-example">"오늘 우리 아이는 책 대신 이걸 골랐어요"</p>
+        </div>
+        <p class="band-action">행동 — 댓글로 답하기</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Panel 3: 7일 캠페인 -->
+  <section class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+    <h2 class="section-head">이번 주 7일 캠페인</h2>
+    <p class="section-sub">하루 한 시간 책읽기 무료 자료로 시작해서, 체크리스트를 저장하고 하루 실천해보는 것으로 이어지는 한 주입니다.</p>
+
+    <div class="cal-grid">
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">월요일</span><span class="day-num">1</span></div>
+        <p class="day-content">"책 안 읽는 아이, 사실 저희 집도 그랬어요."</p>
+        <span class="day-channel" data-ch="쓰레드">쓰레드</span>
+        <p class="day-action">댓글로 답하기</p>
+      </div>
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">화요일</span><span class="day-num">2</span></div>
+        <p class="day-content">오늘 할 일: 5분 타이머 맞추고 아무 페이지나 펼치기.</p>
+        <span class="day-channel" data-ch="인스타그램">인스타그램</span>
+        <p class="day-action">저장하기</p>
+      </div>
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">수요일</span><span class="day-num">3</span></div>
+        <p class="day-content">5분이 30분보다 오래가는 이유를, 순서대로 설명합니다.</p>
+        <span class="day-channel" data-ch="블로그">블로그</span>
+        <p class="day-action">끝까지 읽고 적용해보기</p>
+      </div>
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">목요일</span><span class="day-num">4</span></div>
+        <p class="day-content">책 앞에서 5분을 못 버티던 아이, 그 다음 이야기.</p>
+        <span class="day-channel" data-ch="유튜브">유튜브</span>
+        <p class="day-action">영상 끝까지 보기</p>
+      </div>
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">금요일</span><span class="day-num">5</span></div>
+        <p class="day-content">"오늘 우리 아이가 고른 페이지, 여러분 아이는요?"</p>
+        <span class="day-channel" data-ch="쓰레드">쓰레드</span>
+        <p class="day-action">댓글로 답하기</p>
+      </div>
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">토요일</span><span class="day-num">6</span></div>
+        <p class="day-content">한 줄 감상문 쓰는 법, 딱 3단계로 정리했어요.</p>
+        <span class="day-channel" data-ch="인스타그램">인스타그램</span>
+        <p class="day-action">저장하기</p>
+      </div>
+      <div class="day-cell">
+        <div class="day-top"><span class="day-label">일요일</span><span class="day-num">7</span></div>
+        <p class="day-content">이번 주 실천표 정리: 하루 한 시간 책읽기 무료 자료 받기.</p>
+        <span class="day-channel" data-ch="블로그">블로그</span>
+        <p class="day-action">무료 자료 받기</p>
+      </div>
+    </div>
+
+    <p class="footnote">이 표는 우리 집에서 실제로 해본 순서를 바탕으로 만든 계획입니다. 모든 아이에게 똑같이 맞는 정답은 아니며, 진행 상황에 따라 순서를 바꿔도 괜찮습니다.</p>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    var tabs = document.querySelectorAll('.tab');
+    var panels = document.querySelectorAll('.panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var targetId = tab.getAttribute('data-target');
+        tabs.forEach(function(t){ t.setAttribute('aria-selected', 'false'); });
+        tab.setAttribute('aria-selected', 'true');
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
